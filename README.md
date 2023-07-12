@@ -1,7 +1,9 @@
 # stable-profusion-lite
-A low memory overlay and web browser for working with local instances of stable-diffusion-webui. Lightweight fork of Stable-Profusion. **For more information about Stable-Profusion and its usage, please refer to the GitHub repository.
+A low memory overlay and web browser for working with local instances of stable-diffusion-webui. Lightweight fork of Stable-Profusion. 
 
-[https://github.com/txtatech/stable-profusion](https://github.com/txtatech/stable-profusion),**
+**For more information about Stable-Profusion and its usage, please refer to the GitHub repository.**
+
+[https://github.com/txtatech/stable-profusion](https://github.com/txtatech/stable-profusion),
 
 This application acts as an overlay that can load multiple iframes (one below the other) on the main page for specified urls.
 
