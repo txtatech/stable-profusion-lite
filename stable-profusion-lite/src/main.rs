@@ -4,64 +4,75 @@ use serde_json::Value;
 fn main() {
     let html = r#"
 <html>
-   <head>
+<head>
       <style>
+         #nav-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background-color: #444;
+            color: #fff;
+         }
+
          body.dark-mode {
-         background-color: #111;
-         color: #fff;
+            background-color: #111;
+            color: #fff;
          }
          body.dark-mode a {
-         color: #fff;
+            color: #fff;
          }
          body.dark-mode .separator {
-         color: #999;
+            color: #999;
          }
          body.dark-mode .versions {
-         color: #ff9800;
+            color: #ff9800;
          }
-         /* Specific dark mode styles for iframe */
+
          #ssb-container.dark-mode iframe {
-         filter: invert(1);
+            filter: invert(1);
          }
          table {
-         border-collapse: collapse;
+            border-collapse: collapse;
          }
          table td {
-         padding: 2px;
+            padding: 2px;
          }
          input[type="text"] {
-         background-color: #333;
-         color: #fff;
-         border: none;
-         padding: 5px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 5px;
          }
          button {
-         background-color: #444;
-         color: #fff;
-         border: none;
-         padding: 2px 2px;
-         cursor: pointer;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 2px 2px;
+            cursor: pointer;
          }
          textarea {
-         background-color: #333;
-         color: #fff;
-         border: none;
-         padding: 2px;
-         resize: none;
-         font-size: 1.0em;
-         width: 100%;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 2px;
+            resize: none;
+            font-size: 1.0em;
+            width: 100%;
          }
          .ssb-wrapper {
-         transform: scale(.99);
-         position: relative; /* Set the position of the wrapper to relative */
-         margin-bottom: 10px;
-         margin-left: 1px;
-         margin-right: 1px;
-         margin-top: 10px;
+            transform: scale(.98);
+            position: relative; 
+            margin-bottom: 10px;
+            margin-left: 1px;
+            margin-right: 1px;
+            margin-top: 10px;
          }
       </style>
    </head>
    <body class="dark-mode">
+      <div id="nav-bar">
       <table>
          <tr>
             <td>
@@ -89,13 +100,23 @@ fn main() {
          <td><button onclick="conductSearch()">Search</button></td>
          </tr>
       </table>
+      </div>
       <div id="ssb-container"></div>
-      <h6>+ Prompt:</h6>
-      <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
-      <h6>- Prompt:</h6>
-      <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
-      <h6>Scratchpad:</h6>
-      <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
+      <div id="main-content">
+         <div class="textarea-container">
+            <h6>+ Prompt:</h6>
+            <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
+         </div>
+
+         <div class="textarea-container">
+            <h6>- Prompt:</h6>
+            <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
+         </div>
+
+         <div class="textarea-container">
+            <h6>Scratchpad:</h6>
+            <textarea rows="10" cols="141" style="font-size: 1.0em;"></textarea>
+         </div>
       <script>
          function conductSearch() {
            const searchInput = document.getElementById('search-input');
@@ -107,7 +128,6 @@ fn main() {
              window.location.href = searchUrl;
            }
          }
-
       </script>
       <script>
          let urlHistory = [];
@@ -118,35 +138,35 @@ fn main() {
 
              if (url !== '') {
                  if (inputId === 'url-input' || inputId === 'url-input1') {
-                     // Update the URL in the current web view using JavaScript
+
                      window.location.href = url;
                  } else {
-                     // Open the URL in a new web view
+
                      window.open(url);
                  }
-                 // Add the URL to the history array
+
                  addToUrlHistory(url);
              }
          }
 
          function addToUrlHistory(url) {
-             // Check if the URL is already in the history
+
              const index = urlHistory.indexOf(url);
              if (index !== -1) {
-                 // If the URL exists, remove it from its current position
+
                  urlHistory.splice(index, 1);
              }
-             // Add the URL at the beginning of the history array
+
              urlHistory.unshift(url);
-             // Update the select element with the new history
+
              updateUrlHistorySelect();
          }
 
          function updateUrlHistorySelect() {
              const urlHistorySelect = document.getElementById('url-history');
-             // Clear the select element
+
              urlHistorySelect.innerHTML = '<option value="">History</option>';
-             // Add options for each URL in the history array
+
              for (let i = 0; i < urlHistory.length; i++) {
                  const url = urlHistory[i];
                  const option = document.createElement('option');
@@ -160,41 +180,25 @@ fn main() {
              const urlHistorySelect = document.getElementById('url-history');
              const selectedUrl = urlHistorySelect.value;
              if (selectedUrl !== '') {
-                 // Update the URL input field with the selected URL
+
                  const urlInput = document.getElementById('url-input');
                  urlInput.value = selectedUrl;
              }
          }
       </script>
       <script>
-         function openNewWebView(inputId) {
-         const urlInput = document.getElementById(inputId);
-         const url = urlInput.value.trim();
-
-         if (url !== '') {
-         if (inputId === 'url-input' || inputId === 'url-input1') {
-         // Update the URL in the current web view using JavaScript
-         window.location.href = url;
-         } else {
-         // Open the URL in a new web view
-         window.open(url);
-         }
-         }
-         }
-
-         // Function to load SSB (Single Site Browser)
          function loadSSB(inputId) {
          const ssbUrlInput = document.getElementById(inputId);
          const ssbUrl = ssbUrlInput.value;
          const ssbContainer = document.getElementById('ssb-container');
          const ssbWrapper = document.createElement('div');
-         ssbWrapper.className = 'ssb-wrapper'; // Add the CSS class for styling
+         ssbWrapper.className = 'ssb-wrapper'; 
          const iframe = document.createElement('iframe');
          iframe.src = ssbUrl;
-         iframe.style.width = '97%';
-         iframe.style.height = '120%';
+         iframe.style.width = '99%';
+         iframe.style.height = '147%';
          const urlCloseContainer = document.createElement('div');
-         urlCloseContainer.className = 'url-close-container'; // Add the CSS class for styling
+         urlCloseContainer.className = 'url-close-container'; 
          const closeButton = document.createElement('button');
          closeButton.innerHTML = `Close ${ssbUrl}`;
          closeButton.onclick = function () {
@@ -203,7 +207,7 @@ fn main() {
          ssbWrapper.appendChild(iframe);
          urlCloseContainer.appendChild(closeButton);
          ssbWrapper.appendChild(urlCloseContainer);
-         ssbContainer.appendChild(ssbWrapper); // Append ssbWrapper to ssbContainer
+         ssbContainer.appendChild(ssbWrapper); 
          ssbUrlInput.value = '';
          ssbUrlInput.value = ssbUrl;
          }
@@ -243,7 +247,6 @@ fn main() {
          const currentWindow = window.parent;
          currentWindow.document.documentElement.classList.add('inspect-element');
          }
-
       </script>
    </body>
 </html>
