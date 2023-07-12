@@ -1,5 +1,7 @@
 # stable-profusion-lite
-A low memory overlay and web browser for working with local instances of stable-diffusion-webui. Lightweight fork of Stable-Profusion. 
+A low memory overlay and web browser for working with local instances of stable-diffusion-webui. 
+
+This is a lightweight fork of Stable-Profusion. 
 
 **For more information about Stable-Profusion and its usage, please refer to the GitHub repository.**
 
