@@ -5,7 +5,7 @@ This is a lightweight fork of Stable-Profusion.
 
 **For more information about Stable-Profusion and its usage, please refer to the GitHub repository.**
 
-[https://github.com/txtatech/stable-profusion](https://github.com/txtatech/stable-profusion),
+[https://github.com/txtatech/stable-profusion](https://github.com/txtatech/stable-profusion)
 
 This application acts as an overlay that can load multiple iframes (one below the other) on the main page for specified urls.
 
@@ -15,7 +15,7 @@ There is a + Prompt, - Prompt, and 'scratch pad' text area below where the ifram
 
 The search feature resolves to https://search.brave.com
 
-It is designed to work with [https://github.com/AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui).
+It is designed to work with [https://github.com/AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
 ### Prerequisites:
 
